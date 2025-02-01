@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <!-- Tags de metadados (tags meta) -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Inclusão do arquivo com código CSS -->
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+
+        <!-- "Biblioteca" JavaScript com utilitários -->
+        <!-- Não usar o defer com este script -->
+        <script src="javascripts/utils.js"></script>
+
+        <!-- Inclusão do JavaScript do Bootstrap -->
+        <script src="/bootstrap/js/bootstrap.bundle.min.js" defer></script>
+
+        <!-- Inclusão dos JavaScript Específicos -->
+        <% if (scripts.length) { %>
+            <% scripts.forEach(script => { %>
+                <script src="javascripts/<%= script %>" defer></script>
+            <% }); %>
+        <% } %>
+        
+        <!-- Título -->
+        <title>Scholarium</title>
+    </head>
+    <body>
+        <!-- Redefine o tamanho base de fonte para toda a página -->
+        <!-- O Bootstrap fará os ajustes usando rem, baseado neste tamanho -->
+        <script>
+            document.documentElement.style.fontSize = "<%= fonte_base %>px";
+        </script>
+                <!-- Div (container) que futuramente será de visualização flexível -->
+        <!-- Isso vai permitir organizar o conteúdo em colunas -->
+        <!-- Bloco lógico que engloba todo o conteúdo da página -->
+        <div class="d-flex vh-100">
+            <!-- A tag nav é própria para a implementação de barras de navegação -->
+            <nav class="navbar flex-column bg-secondary p-1">
+                <ul class="nav flex-column nav-pills">
+                    <% itens_menu.forEach(item => { %>
+                        <% let aria = ''; %>
+                        <% let classes = 'link-light link-opacity-25-hover'; %>
+                        <% if (item[0] == ativo) { %>
+                            <% aria = ' aria-current="page"'; %>
+                            <% classes = 'active'; %>
+                        <% } %>
+                        <li class="nav-item">
+                            <a class="nav-link <%= classes %>"<%= aria %> href="<%= item[1] %>"><%= item[0] %></a>
+                        </li>
+                    <% }); %>
+                </ul>
+            </nav>
+
+            <!-- Área de Conteúdo -->
+            <div class="d-flex flex-column flex-grow-1 p-1">
+                <!-- Cabeçalho (barra escura no topo) -->
+                <header class="bg-dark text-white text-center p-0">
+                    <div class="container">
+                        <h1 class="p-0">Scholarium</h1>
+                        <p class="lead p-0">Gestão de Estudos</p>
+                    </div>
+                </header>

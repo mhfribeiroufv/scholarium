@@ -1,3 +1,15 @@
 {
-    "db": "../db/scholarium.db"
+    "db": "./db/scholarium.db",
+    "ipp": 2,
+    "ivp": 2,
+    "fonte_base": 14,
+    "itens_menu": [
+        ["Aulas", "/"],
+        ["Materiais", "/"],
+        ["Cursos", "/"],
+        ["Plataformas", "/"],
+        ["Meus Dados", "/"],
+        ["Usuários", "/"],
+        ["Status", "/status"]
+    ]
 }

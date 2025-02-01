@@ -1,0 +1,90 @@
+<%- include('./partials/topo'); %>
+
+                <!-- Conteúdo propriamente dito (central) -->
+                <div class="flex-grow-1 p-1">
+                    <!-- Título do conteúdo -->
+                    <h2>Status</h2>
+                    <!-- Barra superior -->
+                    <div>
+                        <!-- Texto -->
+                        <p>Gerencie os diferentes status disponíveis no sistema.</p>
+                        <!-- Botão para abrir modal -->
+                        <button type="button" class="btn btn-primary" id="btn_novo" data-bs-toggle="modal" data-bs-target="#modalInsercao">+ Novo Status</button>
+                    </div>
+
+                    <!-- Tabela com os dados cadastrados -->
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover mt-3" id="tbl_status">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Descrição</th>
+                                    <th scope="col">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% dados_pagina.forEach( item => { %>
+                                    <tr>
+                                        <td scope="row"><%= item.id %></td>
+                                        <td><%= item.descricao %></td>
+                                        <td>
+                                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalInsercao" id="btn_upd_item<%= item.id %>">Editar</button>
+                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalConfirmacao" id="btn_del_item<%= item.id %>">Excluir</button>
+                                        </td>
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <%- include('./partials/paginacao'); %>
+                </div>
+
+<!-- Modal de Confirmação -->
+<div class="modal fade" id="modalConfirmacao" tabindex="-1" aria-labelledby="modalConfirmacaoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="modalConfirmacaoLabel">Exclusão de Status</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">Deseja realmente excluir o status &quot;<span id="spn_del_descricao"></span>&quot;?</div>
+        <div class="modal-footer">
+            <!-- Campo que vai salvar a descrição -->
+            <input type="hidden" id="hid_del_descricao" value="">
+            <!-- Campo que vai salvar o id -->
+            <input type="hidden" id="hid_del_id" value="">
+
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCancelaExclusao">Cancelar</button>
+            <button type="button" class="btn btn-primary" id="btnExclusao">OK</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Inserção -->
+<div class="modal fade" id="modalInsercao" tabindex="-1" aria-labelledby="modalInsercaoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="modalInsercaoLabel">Inserção de Novo Status</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+            <form class="needs-validation" action="/status/add" method="post" id="formInsercao">
+                <div class="modal-body">
+                <div class="mb-3">
+                    <input type="hidden" id="hid_ins_id" value="">
+                    <label for="descricaoInput" class="form-label">Descrição</label>
+                    <input type="text" class="form-control" id="descricaoInput" placeholder="Informe a descrição do status..." required />
+                    <div class="invalid-feedback">Favor informar a descrição.</div>
+                </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCancelaInsercao">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnInsercao">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include('./partials/base'); %>

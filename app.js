@@ -4,8 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+// Rotas
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var statusRouter = require('./routes/status');
 
 var app = express();
 
@@ -19,8 +20,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Inclusões de rotas
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/status', statusRouter);
+
+// Bootstrap 5
+app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

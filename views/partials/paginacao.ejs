@@ -1,0 +1,67 @@
+                    <nav aria-label="Paginação da tabela">
+                        <% let url = '/' + ativo.toLowerCase(); %>
+                        <% let i; %>
+                        <% let inicio = (pagina - ivp) <= 0? 1: pagina - ivp; %>
+                        <% let fim = (pagina + ivp) > total_paginas? total_paginas: pagina + ivp; %>
+                        <% let num_pagina; %>
+                    
+                        <ul class="pagination justify-content-center">
+                        <!-- Link para a primeira página -->
+                        <li class="page-item">
+                            <a class="page-link" href="<%= url %>?pagina=1" aria-label="Primeira">
+                            <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    
+                        <!-- Link para a página anterior -->
+                        <% if (pagina > 1) { %>
+                        <li class="page-item">
+                            <% let previa = '?pagina=' + (pagina - 1).toString(); %>
+                            <a class="page-link" href="<%= url %><%= previa %>" aria-label="Anterior">
+                            <span aria-hidden="true">&lt;</span>
+                            </a>
+                        </li>
+                        <% } %>
+                    
+                        <!-- Se necessário, acrescenta reticências antes -->
+                        <% if (inicio > 1) { %>
+                        <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                        <% } %>
+                    
+                        <!-- Páginas anteriores à atual -->
+                        <% for (i=inicio; i < pagina; i++) { num_pagina = '?pagina=' + i.toString(); %>
+                        <li class="page-item"><a class="page-link" href="<%= url %><%= num_pagina %>"><%= i %></a></li>
+                        <% } num_pagina = '?pagina=' + i.toString(); %>
+                    
+                        <!-- Página atual -->
+                        <li class="page-item"><a class="page-link active" href="<%= url %><%= num_pagina %>"><%= i %></a></li>
+                    
+                        <!-- Páginas posteriores à atual -->
+                        <% for (i=pagina+1; i <= fim; i++) { num_pagina = '?pagina=' + i.toString(); %>
+                        <li class="page-item"><a class="page-link" href="<%= url %><%= num_pagina %>"><%= i %></a></li>
+                        <% } %>
+                    
+                        <!-- Se necessário, acrescenta reticências depois -->
+                        <% if (fim < total_paginas) { %>
+                        <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                        <% } %>
+                    
+                        <!-- Link para a página seguinte -->
+                        <% if (pagina < total_paginas) { %>
+                        <li class="page-item">
+                            <% let seguinte = '?pagina=' + (parseInt(pagina) + 1).toString(); %>
+                            <a class="page-link" href="<%= url %><%= seguinte %>" aria-label="Seguinte">
+                            <span aria-hidden="true">&gt;</span>
+                            </a>
+                        </li>
+                        <% } %>
+                    
+                        <!-- Link para a última página -->
+                        <li class="page-item">
+                            <a class="page-link" href="<%= url %>?pagina=<%= total_paginas %>" aria-label="Última">
+                            <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        </ul>
+                    </nav>
+  
